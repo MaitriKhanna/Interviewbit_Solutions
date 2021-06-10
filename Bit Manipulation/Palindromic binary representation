@@ -1,0 +1,32 @@
+int reverse(int A){
+    int b=0;
+    while(A){
+        b<<=1;
+        b|= (A&1);
+        A>>=1;
+    }
+    
+    return b;
+}
+
+int Solution::solve(int A) {
+    int ans,count=1,len=1,p;
+    while(count<A){
+        len++;
+        if(len%2==0){
+            p= (len-2)/2;
+        }
+        else{
+            p=len/2;
+        }
+        count+= pow(2,p);
+    }
+    
+    count-= pow(2,p);
+    ans= 1<<(len-1);
+    int agla= A-count-1;
+    ans|= (agla<<(len/2));
+    ans|= reverse(ans);
+    
+    return ans;
+}
