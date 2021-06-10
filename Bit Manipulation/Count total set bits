@@ -1,0 +1,19 @@
+#define mod 1000000007
+
+int Solution::solve(int A) {
+    int count=0;
+    A++;
+    int pwr2=2;
+    count+= (A/2);
+    while(pwr2<=A){
+        int grp= A/pwr2;
+        count= ((count%mod)+((grp/2)*pwr2)%mod)%mod;
+        count%=mod;
+        count+= (grp & 1) ? (A%pwr2)%mod : 0;
+        count%=mod;
+        
+        pwr2 <<= 1;
+    }
+    
+    return count%mod;
+}
