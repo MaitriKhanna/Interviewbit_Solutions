@@ -1,0 +1,28 @@
+ int Solution::solve(vector<int> &A, int B) {
+    int n= A.size();
+    sort(A.begin(), A.end());
+   
+    int j=1,i=0;
+    
+    if(B==0){    // bcoz in our 2 pointer logic if i==j it will return 1 in this case
+        for(int k=0;k<n-1;k++){
+            if(A[k]==A[k+1]) return 1; 
+        }
+        
+        return 0;
+    }
+    
+    while(j<n && i<n){
+        int diff= A[j]-A[i];
+        if(diff==B) return 1;
+        if(diff>B){
+            i++;
+        }
+        if(diff<B){
+            j++;
+        }
+    }
+    
+    
+    return 0;
+ }
