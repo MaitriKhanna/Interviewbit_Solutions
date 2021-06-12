@@ -1,0 +1,55 @@
+void Solution::merge(vector<int> &A, vector<int> &B){
+    int n=A.size(),m=B.size();
+    for(int k=0;k<m;k++) A.push_back(0);
+    int l= m+n-1;
+    int i=n-1,j=m-1;
+    while(j>=0){
+        if(i>=0 && A[i]>=B[j]){
+            A[l--]=A[i--];
+        }
+        else{
+            A[l--]=B[j--];
+        }
+    }
+}
+
+
+/*- with space
+
+void Solution::merge(vector<int> &A, vector<int> &B) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    int n=A.size(),m=B.size();
+    vector<int> res;
+    int i=0,j=0;
+    while(i<n && j<m){
+        if(A[i]<B[j]){
+            res.push_back(A[i]);
+            i++;
+        }
+        else{
+            res.push_back(B[j]);
+            j++;
+        }
+    }
+    
+    if(i<n){
+        while(i<n){
+            res.push_back(A[i]);
+            i++;
+        }
+    }
+    
+    if(j<m){
+        while(j<m){
+            res.push_back(B[j]);
+            j++;
+        }
+    }
+    
+    A=res;
+    
+    return;
+} */
