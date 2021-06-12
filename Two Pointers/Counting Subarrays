@@ -1,0 +1,38 @@
+int Solution::solve(vector<int> &A, int B){
+    int n= A.size();
+    int count=0;
+    int start=0,end=0;
+    int sum=0;
+    while(end < n){
+        sum+=A[end];
+        while(sum>=B){
+            sum-=A[start];
+            start++;
+        }
+        
+        count+= end-start+1;
+        end++;
+    }
+    
+    return count;
+}
+
+
+
+/*
+O N2
+int Solution::solve(vector<int> &A, int B) {
+    int n= A.size();
+    int count=0;
+    for(int i=0;i<n;i++){
+        int sum=A[i];
+        if(sum<B) count++;
+        for(int j=i+1;j<n;j++){
+            sum+= A[j];
+            if(sum<B) count++;
+            if(sum>=B) break; 
+        }
+    }
+    
+    return count;
+} */
