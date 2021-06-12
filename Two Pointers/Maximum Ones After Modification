@@ -1,0 +1,55 @@
+int Solution::solve(vector<int> &A, int B){
+    //clean solution
+    int n=A.size();
+    int left=0,count=0,ans=INT_MIN;
+    
+    for(int i=0;i<n;i++){
+        if(A[i]==0) count++;
+        while(count>B){
+            if(A[left]==0) count--;
+            left++;
+        }
+        
+        ans=max(ans,i-left+1);
+    }
+    
+    return ans;
+}
+
+/*int Solution::solve(vector<int> &A, int B) {
+    int n=A.size();
+    int z=0;
+    int one=0;
+    int i=0,s=0;
+    int ans=INT_MIN;
+    
+    int zer=0;
+    for(int k=0;k<n;k++){
+        if(A[k]==0) zer++;
+    }
+    
+    if(B>=zer) return n;
+    
+    while(i<n){
+        if(A[i]==0) z++;
+        if(A[i]==1) one++;
+        if(z>B){
+            ans=max(ans,one);
+            while(A[s]!=0){
+                one--;
+                s++;
+            }
+            s++;
+            z--;
+            
+        }
+        
+        i++;
+        
+    }
+    
+    ans=max(ans,one);
+    
+    return ans+B;
+    
+}*/
