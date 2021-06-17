@@ -1,0 +1,18 @@
+int Solution::minimize(const vector<int> &A, const vector<int> &B, const vector<int> &C) {
+    int a= A.size(), b= B.size(), c= C.size();
+    int ans= INT_MAX;
+    int i=0,j=0,k=0;
+    
+    while(i<a && j<b && k<c){
+        int maxm= max({A[i],B[j],C[k]});
+        int minm= min({A[i],B[j],C[k]});
+        int diff= abs(maxm-minm);
+        ans=min(ans,diff);
+        if(minm==A[i]) i++;
+        else if(minm==B[j]) j++;
+        else k++;
+    }
+    
+    
+    return ans;
+}
