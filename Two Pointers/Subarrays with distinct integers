@@ -1,0 +1,25 @@
+int get_count(vector<int> &A,int B){
+    int n= A.size();
+    map<int,int> map;
+    int left=0,right=0,count=0;
+    
+    while(right<n){
+        if(map.find(A[right])==map.end()) map[A[right]]=0;
+        map[A[right]]++;
+        while(map.size()>B){
+            map[A[left]]--;
+            if(map[A[left]]==0) map.erase(A[left]);
+            left++;
+        }
+        
+        count+= right-left+1;
+        right++;
+    }
+    
+    return count;
+}
+
+int Solution::solve(vector<int> &A, int B) {
+    
+    return get_count(A,B)-get_count(A,B-1);
+}
