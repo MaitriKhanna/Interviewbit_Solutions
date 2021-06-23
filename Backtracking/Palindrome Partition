@@ -1,0 +1,31 @@
+bool is_palindrome(string A,int start,int end){
+    while(start<=end){
+        if(A[start++]!=A[end--]) return false;
+    }
+
+    return true;
+}
+
+void solve(vector<vector<string>> &res, vector<string> &s,string A, int part){
+    if(part==A.size()){
+        res.push_back(s);
+        return;
+    }
+
+    for(int i=part;i<A.size();i++){
+        if(is_palindrome(A,part,i)){
+            s.push_back(A.substr(part,i-part+1));
+            solve(res,s,A,i+1);
+            s.pop_back();
+        }
+    }
+
+    return;
+}
+
+vector<vector<string> > Solution::partition(string A) {
+    vector<vector<string>> res;
+    vector<string> s;
+    solve(res,s,A,0);
+    return res;
+}
