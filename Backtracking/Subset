@@ -1,0 +1,45 @@
+void solve(vector<int> &A, vector<vector<int>> &res, vector<int> &s,int index){
+    res.push_back(s);
+    
+    for(int i=index;i<A.size();i++){
+        s.push_back(A[i]);
+        solve(A,res,s,i+1);
+        s.pop_back();
+    }
+    
+    return;
+}
+
+
+vector<vector<int> > Solution::subsets(vector<int> &A){
+    vector<vector<int>> res;
+    vector<int> s;
+    sort(A.begin(),A.end());
+    solve(A,res,s,0);
+    
+    return res;
+}
+
+/*void solve(vector<int> &A, vector<vector<int>> &res, vector<int> &s,int index){
+    int n= A.size();
+    if(index>=n) return;
+    s.push_back(A[index]);
+    res.push_back(s);
+    solve(A,res,s,index+1);
+    s.pop_back();
+    
+    
+
+    solve(A,res,s,index+1);
+}
+
+vector<vector<int> > Solution::subsets(vector<int> &A) {
+    vector<vector<int>> res;
+    vector<int> s;
+    res.push_back(s);
+    sort(A.begin(),A.end());
+    solve(A,res,s,0);
+    
+    return res;
+
+} */
