@@ -1,0 +1,37 @@
+void solve(string A, vector<string> &res,vector<string> &s, string st,int index){
+    int n= A.length();
+    if(st.length()==n) res.push_back(st);
+    if(index>=n) return;
+
+    int x= A[index]-'0';
+    int m= s[x].size();
+
+    for(int j=0;j<m;j++){
+        st.push_back(s[x][j]);
+        solve(A,res,s,st,index+1);
+        st.pop_back();
+    }
+
+
+    return;
+}
+vector<string> Solution::letterCombinations(string A) {
+    vector<string> res;
+    vector<string> s;
+    s.push_back("0");
+    s.push_back("1");
+    s.push_back("abc");
+    s.push_back("def");
+    s.push_back("ghi");
+    s.push_back("jkl");
+    s.push_back("mno");
+    s.push_back("pqrs");
+    s.push_back("tuv");
+    s.push_back("wxyz");
+
+    string st="";
+
+    solve(A,res,s,st,0);
+
+    return res;
+}
