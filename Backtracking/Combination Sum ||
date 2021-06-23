@@ -1,0 +1,28 @@
+void solve(vector<int> &A, vector<vector<int>> &res, vector<int> &s,int sum,int B,int index){
+    if(sum==B) res.push_back(s);
+
+    if(sum>=B) return;
+
+    for(int i=index;i<A.size();i++){
+        s.push_back(A[i]);
+        sum+=A[i];
+        solve(A,res,s,sum,B,i+1);
+        s.pop_back();
+        sum-=A[i];
+        while(A[i]==A[i+1] && i<A.size()) i++;
+    }
+
+    return;
+}
+
+vector<vector<int> > Solution::combinationSum(vector<int> &A, int B) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    vector<vector<int>> res;
+    vector<int> s;
+    sort(A.begin(),A.end());
+    solve(A,res,s,0,B,0);
+    return res;
+}
