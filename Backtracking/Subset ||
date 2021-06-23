@@ -1,0 +1,23 @@
+void solve(vector<vector<int>> &res, vector<int> &s, vector<int> &A,int index){
+    res.push_back(s);
+    int n= A.size();
+    if(index>=n) return;
+
+    for(int i=index;i<n;i++){
+        s.push_back(A[i]);
+        solve(res,s,A,i+1);
+        s.pop_back();
+
+        while(A[i]==A[i+1] && i<n) i++;
+    }
+
+    return;
+}
+
+vector<vector<int> > Solution::subsetsWithDup(vector<int> &A) {
+    vector<vector<int>> res;
+    sort(A.begin(),A.end());
+    vector<int> s;
+    solve(res,s,A,0);
+    return res;
+}
