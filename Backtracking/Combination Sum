@@ -1,0 +1,33 @@
+void solve(vector<int> &A,vector<vector<int>> &res, vector<int> &s,int sum,int B,int index){
+    if(sum==B){
+        res.push_back(s);
+    }
+    if(sum>=B){
+        return;
+    }
+
+    for(int i=index;i<A.size();i++){
+        
+        s.push_back(A[i]);
+        sum+= A[i];
+        solve(A,res,s,sum,B,i);
+        s.pop_back();
+        sum-=A[i];
+        
+    }
+
+    return;
+
+}
+
+vector<vector<int> > Solution::combinationSum(vector<int> &A, int B) {
+    vector<vector<int>> res;
+    vector<int> s;
+    int sum=0;
+    sort(A.begin(),A.end());
+    A.erase(unique(A.begin(), A.end()), A.end());   //remove duplicates
+    
+    solve(A,res,s,sum,B,0);
+
+    return res;
+}
