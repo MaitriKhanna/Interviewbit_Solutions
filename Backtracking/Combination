@@ -1,0 +1,21 @@
+void solve(vector<vector<int>> &res, vector<int> &s, int val, int A,int B){
+    if(s.size()==B) res.push_back(s);
+
+    if(s.size()>=B) return;
+
+    for(int i=val;i<=A;i++){
+        s.push_back(i);
+        solve(res,s,i+1,A,B);
+        s.pop_back();
+    }
+
+    return;
+}
+
+
+vector<vector<int> > Solution::combine(int A, int B) {
+    vector<vector<int>> res;
+    vector<int> s;
+    solve(res,s,1,A,B);
+    return res;
+}
