@@ -1,0 +1,30 @@
+void solve(vector<vector<int>> &res,vector<int> &A,int index){
+    // if(s.size()==A.size()){
+    //     res.push_back(s);
+    //     return;
+    // }
+
+    int n= A.size();
+
+    if(index==n){
+        res.push_back(A);
+        return;
+    }
+
+    for(int i=index;i<n;i++){
+        //s.push_back(A[i]);
+        swap(A[i],A[index]);
+        solve(res,A,index+1);
+        swap(A[i],A[index]);
+
+    }
+
+    return;
+}
+
+vector<vector<int> > Solution::permute(vector<int> &A) {
+    vector<vector<int>> res;
+    vector<int> v;
+    solve(res,A,0);
+    return res;
+}
