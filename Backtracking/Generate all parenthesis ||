@@ -1,0 +1,95 @@
+// another method- check valid parenthesis by checking opening and closing brackets
+
+bool isopen(int open,int A){
+    return open<A;
+}
+
+bool isclose(int open,int close){
+    return open-close>0;    // have an open bracket for a closed bracket
+}
+
+void solve(vector<string> &res,string &s,int open, int close,int A){
+    if(s.size()==2*A){
+        res.push_back(s);
+        return;
+    }
+    
+    if(isopen(open,A)){
+        s.push_back('(');
+        open++;
+        solve(res,s,open,close,A);
+        s.pop_back();
+        open--;
+        
+    }
+    
+    if(isclose(open,close)){
+        s.push_back(')');
+        close++;
+        solve(res,s,open,close,A);
+        s.pop_back();
+        close--;
+        
+    }
+    
+    return;
+}
+
+vector<string> Solution::generateParenthesis(int A) {
+    vector<string> res;
+    string s="";
+    solve(res,s,0,0,A);
+    return res;
+
+}
+
+/*bool is_valid(string s){
+    int n=s.size();
+    int c1=0;
+    for(int i=0;i<n;i++){
+        if(s[i]=='(') c1++;
+        else{
+            c1--;
+            if(c1<0){
+                return false;
+            }
+        }
+    }
+
+    if(c1==0) return true;
+    else return false;
+}
+
+void solve(vector<string> &res,string &s,int c1, int c2,int A){
+    if(s.size()==2*A && is_valid(s)){
+        res.push_back(s);
+        return;
+    }
+
+    
+    if(c1>0){
+        c1--;
+        s.push_back('(');
+        solve(res,s,c1,c2,A);
+        s.pop_back();
+        c1++;
+    }
+    if(c2>0){
+        c2--;
+        s.push_back(')');
+        solve(res,s,c1,c2,A);
+        s.pop_back();
+        c2++;
+    }
+    
+
+    return;
+
+}
+vector<string> Solution::generateParenthesis(int A) {
+    vector<string> res;
+    string s="";
+    solve(res,s,A,A,A);
+    return res;
+
+} */
