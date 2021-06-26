@@ -1,0 +1,55 @@
+bool is_possible(vector<string> v, int row, int colm,int A){
+    for(int i=0;i<colm;i++){
+        if(v[row][i] != '.')  return false;
+    }
+    
+
+    int r=row,c=colm;
+
+    while(r>=0 && c>=0){
+        if(v[r][c]!='.') return false;
+        r--; c--;
+    }
+    
+
+    r=row; c=colm;
+    while(r<A && c>=0){
+        if(v[r][c]!='.') return false;
+        r++; c--;
+    }
+
+    
+
+    return true;
+
+}
+
+void solve(vector<vector<string>> &res, vector<string> &v, int A,int index){
+    if(index==A){
+        res.push_back(v);
+        return;
+    }
+
+    for(int i=0;i<A;i++){
+        
+        if(is_possible(v,i,index,A)){
+            v[i][index]='Q';
+            solve(res,v,A,index+1);
+            v[i][index]='.';
+        }
+        
+    }
+
+    return;
+}
+vector<vector<string> > Solution::solveNQueens(int A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    vector<string> v (A,string (A,'.'));
+    vector<vector<string>> res;
+    solve(res,v,A,0);
+
+    return res;
+}
