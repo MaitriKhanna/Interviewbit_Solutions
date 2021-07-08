@@ -1,0 +1,30 @@
+int Solution::solve(const vector<int> &A) {
+    int n= A.size();
+    int sum=0;
+    for(int i=0;i<n;i++) sum+= A[i];
+    sum=sum/2;
+
+    vector<vector<int>> dp (n+1,vector<int> (sum+1));
+    for(int i=0;i<=sum;i++) dp[0][i]= INT_MAX-1;
+    for(int i=0;i<=n;i++) dp[i][0]= 0;
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=sum;j++){
+            if(A[i-1]<=j){
+                dp[i][j]= min(1+dp[i-1][j-A[i-1]], dp[i-1][j]);
+            }
+            else{
+                dp[i][j]= dp[i-1][j];
+            }
+        }
+    }
+    int s;
+    for(int i=sum;i>=0;i--){
+        if(dp[n][i]!= INT_MAX-1){
+            s= dp[n][i];
+            break;
+        }
+    }
+
+    return min(s,n-s);
+}
