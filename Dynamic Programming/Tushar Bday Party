@@ -1,0 +1,28 @@
+int Solution::solve(const vector<int> &A, const vector<int> &B, const vector<int> &C) {
+    int n= A.size();
+    int m= B.size();
+    int ans=0;
+   
+    int sum= *max_element(A.begin(),A.end());
+    vector<vector<long long int>> dp (m+1,vector<long long int> (sum+1));
+    for(int j=0;j<=sum;j++) dp[0][j]= INT_MAX-1;
+    for(int j=0;j<=m;j++) dp[j][0]=0;
+
+    for(int k=1;k<=m;k++){
+        for(int j=1;j<=sum;j++){
+            if(B[k-1]<=j){
+                dp[k][j]= min((C[k-1]+dp[k][j-B[k-1]]),dp[k-1][j]);
+            }
+            else{
+                dp[k][j]= dp[k-1][j];
+            }
+        }
+    }
+
+    for(int i=0;i<n;i++){
+        ans+= dp[m][A[i]];
+    }
+    
+
+    return ans;
+}
