@@ -1,0 +1,47 @@
+//lcs tabular
+
+int Solution::solve(string A, string B) {
+    int a=A.size();
+    int b=B.size();
+    vector<vector<int>> dp (a+1,vector<int> (b+1,0));
+
+    for(int i=1;i<=a;i++){
+        for(int j=1;j<=b;j++){
+            if(A[i-1]==B[j-1]){
+                dp[i][j]=1+dp[i-1][j-1];
+            }
+            else{
+                dp[i][j]= max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+    }
+
+    return dp[a][b];
+}
+
+/*  lcs memoized
+int dp[1006][1006];
+
+int lcs(string A,string B,int a,int b){
+    if(a==0 || b==0) return 0;
+
+    if(dp[a][b]!=-1) return dp[a][b];
+
+    if(A[a-1]==B[b-1]){
+        dp[a][b]= 1+lcs(A,B,a-1,b-1);
+        return dp[a][b];
+    }
+    else{
+        dp[a][b]= max(lcs(A,B,a,b-1),lcs(A,B,a-1,b));
+        return dp[a][b];
+    }
+}
+
+int Solution::solve(string A, string B) {
+    int a=A.size();
+    int b=B.size();
+    memset(dp,-1,sizeof(dp));
+
+    return lcs(A,B,a,b);
+}
+*/
