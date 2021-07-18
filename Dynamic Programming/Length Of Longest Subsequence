@@ -1,0 +1,30 @@
+int Solution::longestSubsequenceLength(const vector<int> &A) {
+    vector<int> B=A;
+    int n=A.size();
+    if(n==0) return 0;
+    if(n==1) return 1;
+    vector<int> dpi (n,1);
+    vector<int> dpd (n,1);
+    reverse(B.begin(),B.end());
+
+    for(int i=1;i<n;i++){
+        for(int j=0;j<i;j++){
+            if(A[i]>A[j]){
+                dpi[i]=max(dpi[i],1+dpi[j]);
+            }
+
+            if(B[i]>B[j]){
+                dpd[i]=max(dpd[i],1+dpd[j]);
+            }
+
+        }
+    }
+    reverse(dpd.begin(),dpd.end());
+    int ans=INT_MIN;
+    for(int i=0;i<n;i++){
+        int x= dpi[i]+dpd[i]-1;
+        ans=max(ans,x);
+    }
+
+    return ans;
+}
