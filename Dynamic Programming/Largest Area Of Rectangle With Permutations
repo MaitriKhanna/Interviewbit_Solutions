@@ -1,0 +1,32 @@
+int Solution::solve(vector<vector<int> > &A) {
+    int n=A.size(),m=A[0].size();
+
+  //find height
+
+    for(int i=0;i<m;i++){
+        for(int j=1;j<n;j++){
+            if(A[j][i]!=0){
+                A[j][i]+= A[j-1][i];
+            }
+        }
+    }
+// sort each row
+    for(int i=0;i<n;i++){
+        sort(A[i].begin(),A[i].end());
+    }
+
+    int res=0,ans=0,w=1;
+// calculate area for each height 
+    for(int i=0;i<n;i++){
+        w=1;
+        for(int j=m-1;j>=0;j--){
+            ans= A[i][j]*w;
+            w++;
+            res=max(res,ans);
+        }
+    }
+
+    return res;
+   
+
+}
