@@ -1,0 +1,112 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+// Efficient Solution
+
+ListNode* Solution::addTwoNumbers(ListNode* A, ListNode* B){
+    if(!A) return B;
+    if(!B) return A;
+
+    int carry=(A->val + B->val)/10;
+    ListNode* head= new ListNode((A->val + B->val)%10);
+    ListNode *tail=head;
+    A=A->next;
+    B=B->next;
+
+    while(A || B || carry){
+        int sum= (A ? A->val : 0) + (B ? B->val : 0) + carry;
+        ListNode *temp= new ListNode(sum%10);
+        carry=sum/10;
+        tail->next=temp;
+        tail=tail->next;
+        if(A) A=A->next;
+        if(B) B=B->next;
+    }
+
+    return head;
+}
+
+/*ListNode* Solution::addTwoNumbers(ListNode* A, ListNode* B) {
+    if(A==NULL) return B;
+    if(B==NULL) return A;
+    ListNode *p=A,*q=B,*start;
+    int a=0,b=0;
+    while(p){
+        a++; 
+        p=p->next;
+    }
+    while(q){
+        b++; 
+        q=q->next;
+    }
+    //cout << a << " " << b << endl;
+    if(a<=b){
+        p=A; q=B;
+        start=B;
+    }
+    else{
+        p=B; q=A;
+        start=A;
+    }
+
+    int carry=0,v=0;
+    while(p){
+        int x= p->val+q->val;
+        if(x<10){
+            q->val=x;
+        }
+        else{
+            v=x%10;
+            carry=x/10;
+            q->val=v;
+            if(p->next!=NULL){
+                p->next->val+= carry;
+                carry=0;
+            }
+            else if(q->next!=NULL){
+                q->next->val+=carry;
+                carry=0;
+            }
+            else{
+                while(carry){
+                    ListNode*temp= new ListNode(carry%10);
+                    q->next=temp;
+                    carry=carry/10;
+                }
+            }
+        }
+        p=p->next;
+        q=q->next;
+    }
+    carry=0;
+    if(q){
+        while(q->next!=NULL){
+            if(q->val>=10){
+                carry=(q->val)/10;
+                q->val=(q->val)%10;
+                q->next->val+=carry;
+            }
+            q=q->next;
+        }
+
+        if(q->val>=10){
+            carry=(q->val)/10;
+            q->val=(q->val)%10;
+            while(carry){
+                ListNode *t= new ListNode(carry%10);
+                q->next=t;
+                carry=carry/10;
+                q=q->next;
+            }
+        }
+    }
+
+    return start;
+
+}*/
