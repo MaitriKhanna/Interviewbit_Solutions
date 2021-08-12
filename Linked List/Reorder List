@@ -1,0 +1,70 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+ListNode* reverse(ListNode *head){
+    ListNode *curr=head,*prev=NULL,*next=NULL;
+
+    while(curr){
+        next= curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
+    }
+
+    return prev;
+}
+
+ListNode* Solution::reorderList(ListNode* A){
+    if(A==NULL || A->next==NULL || A->next->next==NULL) return A;
+
+    ListNode *slow=A,*fast=A;
+    while(fast->next && fast->next->next){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    //cout << slow->val;
+    ListNode *r= reverse(slow->next);
+    slow->next=NULL;
+    ListNode *start=new ListNode(0);
+    ListNode *curr= A,*ans=start;
+    while(curr || r){
+        if(curr){
+            start->next=curr;
+            curr=curr->next;
+            start=start->next;
+        }
+        if(r){
+            start->next=r;
+            r=r->next;
+            start=start->next;
+        }
+    }
+
+    return ans->next;
+}
+
+/*ListNode* Solution::reorderList(ListNode* A) {
+    if(A==NULL || A->next==NULL || A->next->next==NULL) return A;
+    
+    ListNode *head=A,*prev=NULL;
+    while(head->next){
+        
+        prev=head;
+        head=head->next;
+    }
+
+    ListNode *start=A;
+    prev->next=NULL;
+    ListNode *temp=A->next;
+    start->next=head;
+    start->next->next= reorderList(temp);
+
+    return start;
+    
+}*/
