@@ -1,0 +1,33 @@
+#define mod 1000000007
+#define ll long long
+
+int Solution::maxSpecialProduct(vector<int> &A) {
+    ll n=A.size();
+    stack<pair<ll,ll>> left,right;
+    vector<ll> l(n),r(n);
+
+    for(ll i=0;i<n;i++){
+        ll x=0;
+        while(!left.empty() && left.top().first<=A[i]){
+            left.pop();
+        }
+        if(!left.empty()){
+            x=left.top().second;
+        }
+        left.push({A[i],i});
+        l[i]=x;
+    }
+
+    for(ll i=n-1;i>=0;i--){
+        ll x=0;
+        while(!right.empty() && right.top().first<=A[i]) right.pop();
+        if(!right.empty()) x=right.top().second;
+        right.push({A[i],i});
+        r[i]=x;
+    }
+
+    ll ans=0;
+    for(ll i=0;i<n;i++) ans=max(ans,l[i]*r[i]);
+
+    return ans%mod;
+}
