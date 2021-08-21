@@ -1,0 +1,79 @@
+// O(1) extra space
+
+stack<int> s;
+int mn;
+
+MinStack::MinStack() {
+    while(!s.empty()) s.pop();
+    
+}
+
+void MinStack::push(int x) {
+   if(s.empty()){
+       s.push(x);
+       mn=x;
+   }
+   else{
+       if(x<mn){
+           s.push(2*x-mn);
+           mn=x;
+       }
+       else s.push(x);
+   }
+    
+}
+
+void MinStack::pop() {
+    if(s.empty()) return;
+    if(s.top()<mn){
+        int prev= 2*mn-s.top();
+        mn=prev;
+    }
+    s.pop();
+}
+
+int MinStack::top() {
+    if(s.empty()) return -1;
+    if(mn>s.top()) return mn;
+    return s.top();
+}
+
+int MinStack::getMin() {
+    if(s.empty()) return -1;
+    return mn;
+}
+
+// O(N) extra space
+/*stack<int> s;
+stack<int> mn;
+
+MinStack::MinStack() {
+    while(!s.empty()) s.pop();
+    while(!mn.empty()) mn.pop();
+}
+
+void MinStack::push(int x) {
+   s.push(x);
+   if(mn.empty()) mn.push(x);
+   else{
+       if(x<=mn.top()) mn.push(x);
+   }
+    
+}
+
+void MinStack::pop() {
+    if(s.empty()) return;
+    if(mn.top()==s.top()) mn.pop();
+    s.pop();
+}
+
+int MinStack::top() {
+    if(s.empty()) return -1;
+    return s.top();
+}
+
+int MinStack::getMin() {
+    if(mn.empty()) return -1;
+    return mn.top();
+}
+*/
