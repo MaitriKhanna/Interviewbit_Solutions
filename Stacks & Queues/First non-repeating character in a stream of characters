@@ -1,0 +1,23 @@
+string Solution::solve(string A) {
+    string B="";
+    queue<char> q;
+    unordered_map<char,int> map;
+    int n=A.size();
+    
+    for(int i=0;i<n;i++){
+        q.push(A[i]);
+        map[A[i]]++;
+
+        while(!q.empty() && map[q.front()]!=1){
+            q.pop();
+        }
+
+        if(q.empty()){
+            B+='#';
+        }
+        else B+=q.front();
+            
+    }
+
+    return B;
+}
