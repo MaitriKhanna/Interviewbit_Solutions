@@ -1,0 +1,41 @@
+// deque approach
+/*
+vector<int> Solution::slidingMaximum(const vector<int> &A, int B) {
+    int n=A.size();
+    vector<int> ans;
+    deque<int> q;
+
+    for(int i=0;i<n;i++){
+        if(!q.empty() && q.front()==(i-B)) q.pop_front();
+        while(!q.empty() && A[q.back()]<=A[i]) q.pop_back();
+        q.push_back(i);
+        if(i+1>=B) ans.push_back(A[q.front()]);
+    }
+
+    return ans;
+}*/
+
+// vector approach
+
+vector<int> Solution::slidingMaximum(const vector<int> &A, int B){
+    int n=A.size();
+    vector<int> left(n),right(n);
+
+    for(int i=0;i<n;i++){
+        if(i%B==0) left[i]=A[i];
+        else left[i]=max(left[i-1],A[i]);
+    }
+
+    for(int i=n-1;i>=0;i--){
+        if((i+1)%B==0 || i==n-1) right[i]=A[i];
+        else right[i]=max(right[i+1],A[i]);
+    }
+
+    vector<int> ans;
+
+    for(int i=0;i<=n-B;i++){
+        ans.push_back(max(right[i],left[i+B-1]));
+    }
+
+    return ans;
+}
