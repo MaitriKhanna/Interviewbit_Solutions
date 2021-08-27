@@ -1,0 +1,73 @@
+#define mod 1000000007
+// const space
+
+int Solution::numDecodings(string A){
+    int n=A.size();
+    int curr=0,near=1,far=0;
+
+    for(int i=n-1;i>=0;i--){
+        curr=near;
+
+        if(A[i]=='0'){
+            curr=0;    
+        }
+
+        if(i<=n-2 && (A[i]=='1' || (A[i]=='2' && A[i+1]<='6'))){
+            curr=(curr%mod+far%mod)%mod;
+            
+        }
+
+        far=near;
+        near=curr;
+        
+    }
+
+    return curr;
+
+}
+
+/* array
+int Solution::numDecodings(string A){
+    int n=A.size();
+    vector<int> dp(n+1,0);
+    dp[n]=1;
+
+    for(int i=n-1;i>=0;i--){
+        if(A[i]=='0'){
+            dp[i]=0;
+            continue;
+        }
+        dp[i]=dp[i+1]%mod;
+
+        if(i<=n-2 && (A[i]=='1' || (A[i]=='2' && A[i+1]<='6'))){
+            dp[i]+=dp[i+2]%mod;
+            dp[i]%=mod;
+        }
+    }
+
+    return dp[0];
+
+}*/
+
+/*int dp[100001];
+
+int solve(string A, int index){
+    if(index==A.length()) return 1;
+    
+    if(dp[index]!=-1) return dp[index]%mod;
+
+    int ans= 0;
+    if(A[index]!='0') ans+= solve(A,index+1)%mod;
+
+    if((index<=A.length()-2) && (A[index]=='1' ||  (A[index]=='2' && A[index+1]<='6'))){
+        ans+= solve(A,index+2)%mod;
+    }
+
+    return dp[index]=ans%mod;
+}
+
+int Solution::numDecodings(string A) {
+    memset(dp,-1,sizeof(dp));
+    return solve(A,0);
+
+*/
