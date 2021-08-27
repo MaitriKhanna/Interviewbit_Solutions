@@ -1,0 +1,45 @@
+int Solution::lis(const vector<int> &A){
+    int n=A.size();
+    vector<int> v;
+    v.push_back(A[0]);
+    int len=1;
+
+    for(int i=1;i<n;i++){
+        auto it= lower_bound(v.begin(),v.begin()+len,A[i]);
+        if(it==v.begin()+len){
+            v.push_back(A[i]);
+            len++;
+        }
+        else *it=A[i];
+
+        
+    }
+
+    return len;
+}
+
+
+/*
+int Solution::lis(const vector<int> &A) {
+    int n=A.size();
+    vector<int> B=A;
+    sort(B.begin(),B.end());
+    auto it= unique(B.begin(),B.end());
+    B.resize(distance(B.begin(),it));
+    int m=B.size();
+
+    vector<vector<int>> dp(n+1,vector<int> (m+1,0));
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(A[i-1]==B[j-1]){
+                dp[i][j]=1+dp[i-1][j-1];
+            }
+            else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+        }
+    }
+
+    return dp[n][m];
+
+
+}*/
