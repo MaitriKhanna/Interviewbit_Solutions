@@ -1,0 +1,17 @@
+#define mod 1000000007
+
+int Solution::solve(int A) {
+    if(A%2!=0) return 0;
+
+    vector<int> v(A+1,0);
+    vector<int> b(A+1,0);
+    v[0]=1;
+    b[1]=1;
+    
+    for(int i=2;i<=A;i++){
+        v[i]=(v[i-2]%mod+(2*b[i-1])%mod)%mod;
+        b[i]=(v[i-1]%mod+b[i-2]%mod)%mod;
+    }
+
+    return v[A]%mod;
+}
