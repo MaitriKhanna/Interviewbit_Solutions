@@ -1,0 +1,39 @@
+/*
+int paint(vector<vector<int> > &A, int index,int color,vector<vector<int>> &dp){
+    if(index>=A.size()) return 0;
+
+    if(dp[index][color]!=-1) return dp[index][color];
+
+    int ans=INT_MAX;
+
+    for(int i=0;i<3;i++){
+        if(index==0 || i!=color){
+            ans=min(ans,A[index][i]+paint(A,index+1,i,dp));
+            
+        }
+    }
+
+    return dp[index][color]= ans;
+
+}
+
+int Solution::solve(vector<vector<int> > &A) {
+    int n=A.size();
+    vector<vector<int>> dp(n+1,vector<int> (3,-1));
+
+    return paint(A,0,0,dp);
+
+} */
+
+int Solution::solve(vector<vector<int> > &A){
+    int n=A.size();
+    vector<vector<int>> dp(n+1,vector<int> (3,0));
+
+    for(int i=1;i<=n;i++){
+        for(int j=0;j<3;j++){
+            dp[i][j]= A[i-1][j]+ min(dp[i-1][(j+1)%3],dp[i-1][(j+2)%3]);
+        }
+    }
+
+    return min(dp[n][0],min(dp[n][1],dp[n][2]));
+}
