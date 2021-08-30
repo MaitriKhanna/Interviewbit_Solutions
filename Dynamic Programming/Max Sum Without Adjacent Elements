@@ -1,0 +1,36 @@
+// iterative
+int Solution::adjacent(vector<vector<int> > &A){
+    int n=A[0].size();
+
+    for(int i=0;i<n;i++){
+        A[0][i]= max(A[0][i],A[1][i]);
+    }
+
+    A[0][1]=max(A[0][1],A[0][0]);
+
+    for(int i=2;i<n;i++){
+        A[0][i]=max(A[0][i-1],A[0][i-2]+A[0][i]);
+    }
+
+    return max(A[0][n-1],A[0][n-2]);
+}
+
+/*int dp[20001];
+
+int solve(vector<vector<int> > &A,int index){
+    if(index>=A[0].size()) return 0;
+    if(dp[index]!=-1) return dp[index];
+    int sum1=0,sum2=0;
+    sum1= max(A[0][index],A[1][index])+solve(A,index+2);
+    sum2= solve(A,index+1);
+
+    return dp[index]= max(sum1,sum2);
+
+
+}
+
+int Solution::adjacent(vector<vector<int> > &A) {
+    memset(dp,-1,sizeof(dp));
+    return solve(A,0);
+}
+*/
