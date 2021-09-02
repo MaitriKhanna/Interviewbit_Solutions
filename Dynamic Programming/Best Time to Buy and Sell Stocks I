@@ -1,0 +1,16 @@
+#define ll long long 
+int Solution::maxProfit(const vector<int> &A) {
+    ll n=A.size();
+    if(n<=1) return 0;
+    vector<int> v(n);
+    v[n-1]=A[n-1];
+    for(int i=n-2;i>=0;i--){
+        v[i]=max(A[i],v[i+1]);
+    }
+    int ans=0;
+    for(int i=0;i<n;i++){
+        ans=max(ans,v[i]-A[i]);
+    }
+
+    return ans;
+}
