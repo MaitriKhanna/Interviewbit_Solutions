@@ -1,0 +1,46 @@
+
+int Solution::solve(const vector<int> &A){
+    int n=A.size();
+    if(n<=2) return n;
+    vector<unordered_map<int,int>> map (n);
+    int ans=0;
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            int d=A[j]-A[i];
+            if(map[i].find(d)!=map[i].end()){
+                map[j][d]=1+map[i][d];
+            }
+            else map[j][d]=2;
+
+            ans=max(ans,map[j][d]);
+        }
+    }
+
+    return ans;
+}
+
+/*
+int Solution::solve(const vector<int> &A) {
+    int n=A.size();
+    if(n<=2) return n; 
+    vector<unordered_map<int,int>> map (n);
+    int maxm=0;
+
+    for(int i=1;i<n;i++){
+        for(int j=i-1;j>=0;j--){
+            int d=A[i]-A[j];
+            if(map[j].find(d)!=map[j].end()){
+               if(map[i].find(d)==map[i].end()) map[i][d]=1+map[j][d];
+               else map[i][d]=max(map[i][d],1+map[j][d]);
+            }
+            else{
+                if(map[i].find(d)==map[i].end()) map[i][d]=2;
+            }
+            
+            maxm=max(maxm,map[i][d]);
+        }
+    }
+
+    return maxm;
+}
+*/
