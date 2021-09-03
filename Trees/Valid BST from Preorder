@@ -1,0 +1,39 @@
+int Solution::solve(vector<int> &A){
+    stack<int> s;
+    int root=INT_MIN;
+    for(int i=0;i<A.size();i++){
+        while(!s.empty() && A[i]>s.top()){
+            root=s.top();
+            s.pop();
+        }
+
+        if(root>A[i]) return 0;
+        s.push(A[i]);
+    }
+
+    return 1;
+}
+
+/*
+// O n2
+
+int func(vector<int> &A,int start,int end){
+    if(start>=end) return 1;
+    int i=start;
+    for(;i<end;i++){
+        if(A[i]>A[start]) break;
+    }
+    //if(i==end) return 1;
+    
+    for(int j=i;j<end;j++){
+        if(A[start]>A[j]){
+            return false;
+        }
+    }
+    return func(A,start+1,i-1) && func(A,i,end);
+}
+int Solution::solve(vector<int> &A) {
+    return func(A,0,A.size()-1);
+}
+
+*/
