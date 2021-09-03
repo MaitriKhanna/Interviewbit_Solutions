@@ -1,0 +1,33 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+TreeNode* del(TreeNode*A){
+    if(A->left){
+        A->left= del(A->left);
+    }
+    if(A->right){
+        A->right=del(A->right);
+    }
+
+    if(A->left==NULL ^ A->right==NULL){
+        if(A->left){
+            return A->left;
+        }
+        else{
+            return A->right;
+        }
+    }
+    
+    return A;
+}
+
+TreeNode* Solution::solve(TreeNode* A){
+    return del(A);
+}
