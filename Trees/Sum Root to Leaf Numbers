@@ -1,0 +1,30 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+#define mod 1003
+
+
+void solve(TreeNode* A,int sum,int &ans){
+    if(A==NULL) return;
+
+    sum=((sum*10)%1003 + A->val)%1003;
+    if(!A->left && !A->right){
+        ans=(ans+sum)%1003;
+    }
+    
+    solve(A->left,sum,ans);
+    solve(A->right,sum,ans);
+
+}
+int Solution::sumNumbers(TreeNode* A) {
+    int ans=0;
+    solve(A,0,ans);
+    return ans;
+}
