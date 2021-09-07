@@ -1,0 +1,33 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+int ind=0;
+
+int search_inorder(vector<int> &B,int start,int end,int val){
+    for(int i=start;i<=end;i++){
+        if(B[i]==val) return i;
+    }
+
+    return -1;
+}
+
+TreeNode* solve(vector<int> &A, vector<int> &B,int start,int end){
+    if(start>end) return NULL;
+    TreeNode* t= new TreeNode(A[ind++]);
+    if(start==end) return t;
+    int split= search_inorder(B,start,end,t->val);
+    t->left= solve(A,B,start,split-1);
+    t->right= solve(A,B,split+1,end);
+
+    return t;
+}
+TreeNode* Solution::buildTree(vector<int> &A, vector<int> &B) {
+    ind=0;
+    return solve(A,B,0,A.size()-1);
+}
