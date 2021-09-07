@@ -1,0 +1,40 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+void solve(TreeNode* A,int B,vector<vector<int>> &ans, vector<int> &v){
+    if(A==NULL) return;
+    if(!A->left && !A->right){
+        if(A->val==B){
+            v.push_back(A->val);
+            ans.push_back(v);
+            v.pop_back();
+        }
+        else return;
+    }
+
+    v.push_back(A->val);
+    B=B-A->val;
+    if(A->left){
+        solve(A->left,B,ans,v);
+    }
+    if(A->right){
+        solve(A->right,B,ans,v);
+    }
+
+    v.pop_back();
+    B=B+A->val;
+}
+vector<vector<int> > Solution::pathSum(TreeNode* A, int B) {
+    vector<vector<int>> ans;
+    vector<int> v;
+    solve(A,B,ans,v);
+
+    return ans;
+}
