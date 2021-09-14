@@ -1,0 +1,24 @@
+#define mod 1000000007
+
+
+int digit(int n,int s,vector<vector<int>> &dp){
+    if(n==0 && s==0) return 1;
+    if(n==0) return 0;
+    if(dp[n][s]!=-1) return dp[n][s];
+    int ans=0;
+    for(int i=0;i<=9;i++){
+        if(n==1 && i==0) continue;
+        else{
+            if(i<=s){
+                ans= (ans%mod + digit(n-1,s-i,dp)%mod)%mod;
+            }
+        }
+    }
+
+    return dp[n][s]= ans;
+}
+
+int Solution::solve(int A, int B) {
+    vector<vector<int>> dp(A+1,vector<int> (B+1,-1));
+    return digit(A,B,dp);
+}
