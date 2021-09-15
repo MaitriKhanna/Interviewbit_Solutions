@@ -1,0 +1,27 @@
+vector<vector<int> > Solution::solve(int A, vector<vector<int> > &B) {
+    int n=B.size(),m=B[0].size();
+    if(A==0) return B;
+    vector<vector<int>> dp= B;
+    // idea is to for K=1, for each cell, we can move only left, right, up down. We can calculate for K=1 and
+    // subsequently calculate for K=2... as it will shift the maximum at each step
+    
+    for(int k=1;k<=A;k++){
+        vector<vector<int>> temp= dp;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                int val= dp[i][j];
+                int left= j==0 ? -1 : dp[i][j-1];
+                int right= j==m-1 ? -1 : dp[i][j+1];
+                int up= i==0 ? -1 : dp[i-1][j];
+                int down= i==n-1 ? -1 :dp[i+1][j];
+
+                temp[i][j]= max(val,max(max(left,right),max(up,down)));           
+            }
+        }
+
+        dp=temp;
+    }
+
+    return dp;
+
+}
