@@ -1,0 +1,17 @@
+
+#define mod 1000000007
+
+
+
+int Solution::solve(int A) {
+    long long int a121=12,a123=24,b121,b123;
+
+    for(int i=2;i<=A;i++){
+        b121= (7*a121 + 5*a123)%mod;
+        b123= (10*a121 + 11*a123)%mod;
+        a121= b121%mod;
+        a123= b123%mod;
+    }
+
+    return (a121+a123)%mod;
+}
