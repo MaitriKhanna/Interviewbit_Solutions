@@ -1,0 +1,43 @@
+
+int func(vector<int> &A,int B,int index,vector<vector<int>> &dp){
+    
+    if(index>=A.size() || B==0) return 0;
+    if(dp[index][B]!=-1) return dp[index][B];
+    
+    int profit=func(A,B,index+1,dp);
+   // int maxm=0,v=index;
+    //cout << A[v] << "  " << A[index] << endl;
+    for(int i=index;i<A.size();i++){
+        if(A[i]>A[index]){
+            int val;
+            if(dp[i][B-1]!=-1) val= dp[i][B-1];
+            else{
+                val=func(A,B-1,i,dp);
+                dp[i][B-1]=val;
+            }
+
+            profit=max(profit,A[i]-A[index]+val);
+        }
+    }
+
+
+    return dp[index][B]= profit;
+
+}
+
+int peak(vector<int> &A){
+    int ans=0;
+    for(int i=1;i<A.size();i++){
+        if(A[i]>A[i-1]) ans+= A[i]-A[i-1];
+    }
+
+    return ans;
+}
+
+int Solution::solve(vector<int> &A, int B) {
+
+    if(B>=A.size()/2) return peak(A); // trick- B>=N/2 - we can buy and sell at each step
+
+    vector<vector<int>> dp(A.size()+1,vector<int> (B+1,-1));
+    return func(A,B,0,dp);
+}
