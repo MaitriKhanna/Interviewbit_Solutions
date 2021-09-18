@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+#define I INT_MAX
+
+int main() {
+    int n;
+    cin >> n;
+    vector<vector<int>> cost (n+1,vector<int> (n+1));
+    vector<int> near (n+1,I);
+    vector<vector<int>> t (2,vector<int> (n-1));
+    int minm=I,u=0,v=0;
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=n;j++){
+            cin >> cost[i][j];
+            cout << cost[i][j] << " "; 
+            if(minm>cost[i][j]){
+                cout << minm << "  ";
+                minm=cost[i][j];
+                u=i; v=j;
+            }
+        }
+    }
+    
+    t[0][0]=u; t[1][0]=v;
+    near[u]=near[v]=0;
+    for(int i=1;i<=n;i++){
+        if(near[i]!=0){
+            if(cost[u][i]<cost[v][i]) near[i]=u;
+            else near[i]=v;
+        }
+    }
+    
+    for(int i=1;i<n-1;i++){
+        minm=I;
+        int k;
+        for(int j=1;j<=n;j++){
+            if(near[i]!=0 && cost[j][near[j]]<minm){
+                minm=cost[j][near[j]];
+                k=j;
+            }
+        }
+        t[0][i]=k; t[1][i]=near[k];
+        
+        for(int j=1;j<=n;j++){
+            if(near[j]!=0 && cost[j][near[j]]>cost[j][k]){
+                near[j]=k;
+            }
+        }
+    }
+    
+    for(int i=0;i<n-1;i++){
+        cout << t[0][i] << " " << t[1][i] << endl;
+    }
+        
+    return 0;
+}
