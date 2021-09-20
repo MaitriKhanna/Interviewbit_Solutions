@@ -1,0 +1,42 @@
+// bottom up
+
+
+int Solution::calculateMinimumHP(vector<vector<int> > &A){
+    int n=A.size(),m=A[0].size();
+    vector<vector<int>> dp(n+1,vector<int> (m+1,1e9+7));
+    dp[n-1][m]=dp[n][m-1]=1;
+
+    for(int i=n-1;i>=0;i--){
+        for(int j=m-1;j>=0;j--){
+            int need= min(dp[i+1][j],dp[i][j+1])-A[i][j];
+            dp[i][j]= need<=0 ? 1 : need;
+        }
+    }
+
+    return dp[0][0];
+}
+/* top-down
+int solve(vector<vector<int> > &A,int i,int j,vector<vector<int>> &dp){
+    if(i==A.size()-1 && j==A[0].size()-1){
+        if(A[i][j]>=1) return 1;
+        else return 1-A[i][j];
+    }
+    if(i>=A.size() || j>=A[0].size()) return 1e9+7;
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    int right= solve(A,i,j+1,dp);
+    int down= solve(A,i+1,j,dp);
+
+    int req= min(right,down)- A[i][j];
+
+
+    return dp[i][j]= req<=0 ? 1 : req;
+}
+
+int Solution::calculateMinimumHP(vector<vector<int> > &A) {
+    int n=A.size(),m=A[0].size();
+    vector<vector<int>> dp(n,vector<int>(m,-1));
+
+    return solve(A,0,0,dp);
+}
+*/
