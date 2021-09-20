@@ -1,0 +1,29 @@
+
+int dp[201][201];
+
+int merge(vector<int> &A,int i,int j){
+    if(i>j) return 0;
+    if(i==j) return 0;
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    int ans=INT_MAX;
+    int cost=0,sum=0;
+
+    for(int k=i;k<=j;k++) sum+=A[k];
+
+    for(int k=i;k<j;k++){
+        int left= merge(A,i,k);
+        int right= merge(A,k+1,j);
+        cost=left+right+sum;
+        ans=min(ans,cost);
+    }
+
+    return dp[i][j]=ans;
+}
+
+
+int Solution::solve(vector<int> &A) {
+    memset(dp,-1,sizeof(dp));
+    return merge(A,0,A.size()-1);
+}
