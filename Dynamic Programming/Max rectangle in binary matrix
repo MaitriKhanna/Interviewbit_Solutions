@@ -1,0 +1,64 @@
+
+int histogram(vector<int> &A){
+    int n=A.size();
+    vector<int> left(n),right(n);
+    stack<int> st;
+    for(int i=0;i<n;i++){
+        while(!st.empty() && A[i]<=A[st.top()]){
+            st.pop();
+        }
+        if(st.empty()) left[i]=-1;
+        else{
+            left[i]= st.top();
+        }
+        st.push(i);
+    }
+
+    while(!st.empty()) st.pop();
+
+    for(int i=n-1;i>=0;i--){
+        while(!st.empty() && A[i]<=A[st.top()]){
+            st.pop();
+        }
+        if(st.empty()) right[i]=n;
+        else{
+            right[i]= st.top();
+        }
+        st.push(i);
+    }
+
+    int area=0;
+
+    for(int i=0;i<n;i++){
+        area=max(area,(right[i]-left[i]-1)*A[i]);
+    }
+
+    return area;
+
+}
+
+int Solution::maximalRectangle(vector<vector<int> > &A) {
+    int n=A.size();
+    int m=A[0].size();
+    for(int i=1;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(A[i][j]!=0){
+                A[i][j]+= A[i-1][j];
+            }
+            
+        }
+        
+        
+    }
+
+    int ans=0;
+    
+    
+    for(int i=0;i<n;i++){
+        int x= histogram(A[i]);
+        
+        ans=max(ans,x);
+    }
+
+    return ans;
+}
