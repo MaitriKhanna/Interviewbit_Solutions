@@ -1,0 +1,63 @@
+
+// bottom up ON
+int Solution::minimumTotal(vector<vector<int> > &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    int n=A.size();
+    vector<int> dp (A.back());
+    // since we require only layer and layer+1 array.. so we update in 1 array
+
+    for(int layer=n-2;layer>=0;layer--){
+        for(int j=0;j<=layer;j++){
+            dp[j]= min(dp[j],dp[j+1])+A[layer][j];
+        }
+    }
+
+    return dp[0];
+    
+}
+
+/*
+// bottom up ON2
+int Solution::minimumTotal(vector<vector<int> > &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    int n=A.size();
+    vector<vector<int>> dp (n,vector<int> (n,0));
+    dp[n-1]= A[n-1];
+
+    for(int layer=n-2;layer>=0;layer--){
+        for(int j=0;j<A[layer].size();j++){
+            dp[layer][j]= min(dp[layer+1][j],dp[layer+1][j+1])+A[layer][j];
+        }
+    }
+
+    return dp[0][0];
+    
+}
+*/
+
+
+/* // top down
+int solve(vector<vector<int>> &A,int row,int i,vector<vector<int>> &dp){
+    if(row>=A.size()) return 0;
+    if(dp[row][i]!=-1) return dp[row][i];
+    int ans=0;
+    ans+= A[row][i];
+    ans+= min(solve(A,row+1,i,dp),solve(A,row+1,i+1,dp));
+    return dp[row][i]= ans;
+}
+
+int Solution::minimumTotal(vector<vector<int> > &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    int n=A.size();
+    vector<vector<int>> dp (n,vector<int> (n,-1));
+    return solve(A,0,0,dp);
+}*/
