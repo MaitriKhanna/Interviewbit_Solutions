@@ -1,0 +1,21 @@
+void dfs(vector<vector<int>> &adj,int src,vector<bool> &visited){
+    if(!visited[src]){
+        visited[src]=true;
+        for(auto i : adj[src]){
+            dfs(adj,i,visited);
+        }
+    }
+}
+
+int Solution::solve(int A, vector<vector<int> > &B) {
+    vector<vector<int>> adj (A+1);
+    for(int i=0;i<B.size();i++){
+        adj[B[i][0]].push_back(B[i][1]);
+    }
+
+    vector<bool> visited (A+1,false);
+
+    dfs(adj,1,visited);
+    if(visited[A]) return 1;
+    else return 0;
+}
