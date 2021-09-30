@@ -1,0 +1,38 @@
+bool is_cycle(int src,vector<int> adj[],vector<bool> &visited,vector<bool> &stack){
+    if(stack[src]) return true;
+    if(!visited[src]){
+        visited[src]=true;
+        stack[src]=true;
+        for(auto i : adj[src]){
+            if(!visited[i]){
+                if(is_cycle(i,adj,visited,stack)) return true;
+            }
+            else if(stack[i]) return true;
+        }
+        stack[src]=false;
+        return false;
+    }
+
+    return false;
+}
+
+int Solution::solve(int A, vector<vector<int> > &B) {
+    vector<int> adj[A+1];
+    for(int i=0;i<B.size();i++){
+        adj[B[i][0]].push_back(B[i][1]);
+    }
+
+    vector<bool> visited (A+1,false);
+    vector<bool> stack (A+1,false);
+    visited[0]=true;
+
+    bool cycle=false;
+
+    for(int i=1;i<=A;i++){
+        if(!visited[i] && is_cycle(i,adj,visited,stack)) return true;
+        else if(visited[i] && stack[i]) return true;
+    }
+
+    return false;
+
+}
