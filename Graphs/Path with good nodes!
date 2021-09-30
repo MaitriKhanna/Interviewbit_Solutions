@@ -1,0 +1,40 @@
+int find(vector<vector<int>> &adj, vector<int> &A,int src, int C,vector<bool> &visited){
+    if(C<0) return 0;
+    C-= A[src];
+    visited[src]=true;
+   // cout << src << " ";
+    int ans=0,ngh=0;
+    for(auto i : adj[src]){
+        if(!visited[i]){
+            ngh=1;
+            ans+= find(adj,A,i,C,visited);
+        }
+    }
+    if(ngh==0){
+        if(C>=0) return 1;
+        else return 0;
+    }
+
+    visited[src]=false;
+
+    return ans;
+}
+
+int Solution::solve(vector<int> &A, vector<vector<int> > &B, int C) {
+    int n=A.size();
+    vector<vector<int>> adj (n);
+    for(int i=0;i<B.size();i++){
+        adj[B[i][0]-1].push_back(B[i][1]-1);
+        adj[B[i][1]-1].push_back(B[i][0]-1);        
+    }
+
+    vector<bool> visited (n,false);
+    visited[0]=true;
+    if(A[0]) C=C-1;
+    int ans=0;
+    for(auto i : adj[0]){
+        ans+= find(adj,A,i,C,visited);
+    }
+
+    return ans;
+}
